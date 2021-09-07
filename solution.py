@@ -29,5 +29,5 @@ def welcome_assignment_answers(question):
 
 if __name__ == "__main__":
     #use this space to debug and verify that the program works
-    debug_question = "What layer of the TCP/IP model the protocol TCP belongs to? - The answer should be a numeric number"
+    debug_question = "What layer from the TCP/IP model the protocol DHCP belongs to? - The answer should be a numeric number"
     print(welcome_assignment_answers(debug_question))
