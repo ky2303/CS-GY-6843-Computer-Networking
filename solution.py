@@ -50,7 +50,6 @@ def build_packet():
     header = struct.pack("bbHHh", ICMP_ECHO_REQUEST, 0, myChecksum, ID, 1)
     data = struct.pack("d", time.time())
     myChecksum = checksum(header + data)
-    header = struct.pack("bbHHh", ICMP_ECHO_REQUEST, 0, myChecksum, ID, 1)
     if sys.platform == 'darwin':
        # Convert 16-bit integers from host to network  byte order
        myChecksum = htons(myChecksum) & 0xffff
@@ -87,7 +86,7 @@ def get_route(hostname):
             try:
                 d = build_packet()
                 # print("built packet " + str(d))
-                mySocket.sendto(d, (hostname, 0))
+                mySocket.sendto(d, (destAddr, 0))
                 # print("sent packet")
                 t= time.time()
                 startedSelect = time.time()
@@ -111,7 +110,6 @@ def get_route(hostname):
                     tracelist2.append(tracelist1)
                     #Fill in end
             except timeout:
-                print(tracelist2)
                 continue
 
             else:
@@ -119,6 +117,7 @@ def get_route(hostname):
                 #Fetch the icmp type from the IP packet
                 icmp_packet = struct.unpack_from('bbHHh', recvPacket, 20)
                 types = icmp_packet[0]
+                print(icmp_packet)
                 #Fill in end
                 try: #try to fetch the hostname
                     #Fill in start
@@ -131,8 +130,7 @@ def get_route(hostname):
 
                 if types == 11:
                     bytes = struct.calcsize("d")
-                    timeSent = struct.unpack("d", recvPacket[28:28 +
-                    bytes])[0]
+                    timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     #Fill in start
                     #You should add your responses to your lists here
                     tracelist1= [ttl, f'{round((timeReceived-timeSent)*1000)}ms', addr[0], hostname]
@@ -165,5 +163,5 @@ def get_route(hostname):
             finally:
                 mySocket.close()
 
-if __name__ == '__main__':
-   get_route("google.com")
+# if __name__ == '__main__':
+#    get_route("google.com")
