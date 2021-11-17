@@ -117,7 +117,7 @@ def get_route(hostname):
                 #Fetch the icmp type from the IP packet
                 icmp_packet = struct.unpack_from('bbHHh', recvPacket, 20)
                 types = icmp_packet[0]
-                print(icmp_packet)
+                # print(icmp_packet)
                 #Fill in end
                 try: #try to fetch the hostname
                     #Fill in start
@@ -143,7 +143,6 @@ def get_route(hostname):
                     #You should add your responses to your lists here 
                     tracelist1= [ttl, f'{round((timeReceived-startedSelect)*1000)}ms', addr[0], hostname]
                     tracelist2.append(tracelist1)
-                    return tracelist2
                     #Fill in end
                 elif types == 0:
                     bytes = struct.calcsize("d")
@@ -152,7 +151,9 @@ def get_route(hostname):
                     #You should add your responses to your lists here and return your list if your destination IP is met
                     tracelist1= [ttl, f'{round((timeReceived-startedSelect)*1000)}ms', addr[0], hostname]
                     tracelist2.append(tracelist1)
-                    # print(tracelist2)
+                    for i in tracelist2:
+                        print (i)
+                    return tracelist2
                     #Fill in end
                 else:
                     #Fill in start
@@ -163,5 +164,6 @@ def get_route(hostname):
             finally:
                 mySocket.close()
 
-# if __name__ == '__main__':
-#    get_route("google.com")
+
+if __name__ == '__main__':
+   get_route("google.com")
