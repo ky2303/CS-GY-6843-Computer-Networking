@@ -153,7 +153,7 @@ def get_route(hostname):
                     #You should add your responses to your lists here and return your list if your destination IP is met
                     tracelist1= [ttl, f'{round((timeReceived-timeSent)*1000)}ms', addr[0], hostname]
                     tracelist2.append(tracelist1)
-                    # print(tracelist2)
+                    print(tracelist2)
                     return tracelist2
                     #Fill in end
                 else:
